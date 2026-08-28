@@ -1,0 +1,26 @@
+int tempPin = A0;      // TMP36 sensor pin
+int ledPin = 8;        // LED pin
+float temperature;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int reading = analogRead(tempPin);
+  float voltage = reading * (5.0 / 1024.0);
+  temperature = (voltage - 0.5) * 100;  // Convert to Celsius
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" C");
+
+  if (temperature > 30) {
+    digitalWrite(ledPin, HIGH);   // LED ON if temp exceeds threshold
+  } else {
+    digitalWrite(ledPin, LOW);    // LED OFF otherwise
+  }
+
+  delay(1000);
+}
